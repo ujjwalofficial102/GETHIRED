@@ -138,3 +138,58 @@ export const logout = async (req, res) => {
     });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { fullname, email, phoneNumber, bio, skills } = req.body;
+    const file = req.file;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email format" });
+    }
+    const skillsArray = skills?.trim()
+      ? skills
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean)
+      : null;
+    const userId = req.id; //middleware authentication
+
+    let user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found!",
+      });
+    }
+
+    //updating data
+    user.fullname = fullname || user.fullname;
+    user.email = email || user.email;
+    user.phoneNumber = phoneNumber || user.phoneNumber;
+    user.profile.bio = bio || user.profile.bio;
+    user.profile.skills =
+      skillsArray && skillsArray.length > 0 ? skillsArray : user.profile.skills;
+
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      data: {
+        id: user._id,
+        fullname: user.fullname,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        role: user.role,
+        profile: user.profile,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};

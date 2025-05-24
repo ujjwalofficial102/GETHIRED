@@ -42,7 +42,7 @@ export const register = async (req, res) => {
     });
 
     generateTokenAndSetCookie(newUser._id, res);
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Account Created Successfully.",
       data: {
@@ -55,7 +55,7 @@ export const register = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal Server Error",
     });
@@ -99,7 +99,7 @@ export const login = async (req, res) => {
     }
 
     generateTokenAndSetCookie(user._id, res);
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
 
       message: "Login Successful",
@@ -113,7 +113,7 @@ export const login = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal Server Error",
     });
@@ -127,12 +127,12 @@ export const logout = async (req, res) => {
       sameSite: "strict",
       //   secure: process.env.NODE_ENV !== "development",
     });
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Logged out successfully",
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal Server Error",
     });
@@ -174,7 +174,7 @@ export const updateProfile = async (req, res) => {
       skillsArray && skillsArray.length > 0 ? skillsArray : user.profile.skills;
 
     await user.save();
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "User updated successfully",
       data: {
@@ -187,7 +187,7 @@ export const updateProfile = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Internal Server Error",
     });

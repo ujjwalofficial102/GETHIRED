@@ -6,7 +6,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { LogOut, User2 } from "lucide-react";
 
 const Navbar = () => {
@@ -74,15 +74,19 @@ const Navbar = () => {
             </Popover>
           ) : (
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="cursor-pointer">
-                Login
-              </Button>
-              <Button
-                variant=""
-                className="bg-[#6a38c2] text-white cursor-pointer hover:bg-[#5b30a6]"
-              >
-                Signup
-              </Button>
+              <Link to="/login">
+                <Button variant="outline" className="cursor-pointer">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button
+                  variant=""
+                  className="bg-[#6a38c2] text-white cursor-pointer hover:bg-[#5b30a6]"
+                >
+                  Signup
+                </Button>
+              </Link>
             </div>
           )}
         </div>

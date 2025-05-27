@@ -1,13 +1,10 @@
 import "./App.css";
-import { Button } from "./components/ui/button";
+import Navbar from "./components/shared/Navbar";
 
 function App() {
   return (
     <>
-      <div className="bg-yellow-600">LOLLA</div>
-      <div className="">
-        <Button className={"cursor-pointer"}>Click me</Button>
-      </div>
+      <Navbar />
     </>
   );
 }

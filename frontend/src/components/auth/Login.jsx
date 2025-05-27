@@ -9,7 +9,7 @@ const Login = () => {
   return (
     <div className="h-screen">
       <Navbar />
-      <div className="flex justify-center items-center max-w-7xl mx-auto h-11/12">
+      <div className="flex justify-center items-center max-w-7xl mx-auto h-10/12">
         <form
           action=""
           className="w-1/2 border border-gray-300 p-5 rounded-lg "

@@ -2,8 +2,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Navbar from "../shared/Navbar";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_END_POINT } from "@/utils/constant";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -12,6 +15,8 @@ const Login = () => {
     role: "student",
   });
 
+  const navigate = useNavigate();
+
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -19,10 +24,29 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!input.email || !input.password) {
-      console.log("empty field");
       return;
     }
-    console.log(input);
+
+    try {
+      const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+
+      if (res.data.success === true) {
+        toast.success(res.data.message);
+        console.log(res.data);
+        navigate("/");
+      } else {
+        toast.error(res.data.message);
+        console.log("lund");
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+      console.log(error);
+    }
   };
   return (
     <div className="h-screen">

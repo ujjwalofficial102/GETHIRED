@@ -14,8 +14,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors());
 dotenv.config();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 //api requests
 app.use("/api/v1/user", userRoute);

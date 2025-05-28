@@ -5,6 +5,7 @@ import { generateTokenAndSetCookie } from "../utils/genToken.js";
 export const register = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, password, role } = req.body;
+    console.log("hellow form controller");
     if (!fullname || !email || !phoneNumber || !password || !role) {
       return res.status(400).json({
         success: false,

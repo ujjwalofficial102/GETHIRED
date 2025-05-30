@@ -7,6 +7,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_END_POINT } from "@/utils/constant";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -16,6 +19,8 @@ const Login = () => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -28,6 +33,7 @@ const Login = () => {
     }
 
     try {
+      dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
         headers: {
           "Content-Type": "application/json",
@@ -46,6 +52,8 @@ const Login = () => {
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
   return (
@@ -114,10 +122,16 @@ const Login = () => {
               </div>
             </div>
           </div>
+          {loading ? (
+            <Button className="w-full my-2">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-2 cursor-pointer">
+              Log In
+            </Button>
+          )}
 
-          <Button type="submit" className="w-full my-2 cursor-pointer">
-            Log In
-          </Button>
           <div className="text-sm flex justify-center">
             <span className="flex gap-1">
               Don't have an account?

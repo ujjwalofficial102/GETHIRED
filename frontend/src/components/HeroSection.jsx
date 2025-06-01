@@ -21,7 +21,7 @@ const HeroSection = () => {
           <input
             type="text"
             placeholder="Find your dream job"
-            className="outline-none border-none w-full "
+            className="outline-none border-none w-full px-1"
           />
           <Button className="cursor-pointer rounded-r-full bg-[#6A38C2] hover:bg-[#6A38D2]">
             <Search className="h-5 w-5" />

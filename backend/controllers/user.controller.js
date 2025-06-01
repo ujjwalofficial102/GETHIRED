@@ -45,7 +45,7 @@ export const register = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Account Created Successfully.",
-      data: {
+      user: {
         id: newUser._id,
         fullname: newUser.fullname,
         email: newUser.email,
@@ -103,7 +103,7 @@ export const login = async (req, res) => {
       success: true,
 
       message: "Login Successful",
-      data: {
+      user: {
         id: user._id,
         fullname: user.fullname,
         email: user.email,
@@ -177,7 +177,7 @@ export const updateProfile = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "User updated successfully",
-      data: {
+      user: {
         id: user._id,
         fullname: user.fullname,
         email: user.email,

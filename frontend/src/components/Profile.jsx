@@ -32,7 +32,7 @@ const Profile = () => {
               </p>
             </div>
           </div>
-          <Button className="text-right" variant="outline">
+          <Button className="text-right cursor-pointer" variant="outline">
             <Pen />
           </Button>
         </div>

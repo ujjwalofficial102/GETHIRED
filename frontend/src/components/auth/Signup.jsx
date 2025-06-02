@@ -167,7 +167,7 @@ const Signup = () => {
           </div>
 
           {loading ? (
-            <Button className="w-full my-2">
+            <Button type="button" className="w-full my-2 cursor-not-allowed">
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             </Button>
           ) : (

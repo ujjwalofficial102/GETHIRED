@@ -33,10 +33,6 @@ const appRouter = createBrowserRouter([
     path: "/profile",
     element: <Profile />,
   },
-  {
-    path: "/logout",
-    // element: < />,
-  },
 ]);
 
 function App() {

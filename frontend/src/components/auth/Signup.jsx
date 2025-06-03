@@ -59,12 +59,13 @@ const Signup = () => {
       if (res.data.success === true) {
         toast.success(res.data.message);
         console.log(res.data);
+        dispatch(setUser(res.data.user));
         navigate("/");
       } else {
         toast.error(res.data.message);
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
       console.log(error);
     } finally {
       dispatch(setLoading(false));

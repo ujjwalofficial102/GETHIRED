@@ -13,6 +13,6 @@ const router = express.Router();
 router.post("/register", singleUpload, register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.post("/update", protectRoute, updateProfile); //protect this route with middleware;
+router.post("/update", singleUpload, protectRoute, updateProfile); //protect this route with middleware;
 
 export default router;

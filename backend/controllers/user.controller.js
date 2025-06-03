@@ -141,6 +141,7 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
+    console.log(req.body);
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

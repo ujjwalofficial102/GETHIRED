@@ -7,12 +7,15 @@ import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfileDialog from "./UpdateProfileDialog";
+import { useSelector } from "react-redux";
 
-const skills = ["HTML", "CSS", "JavaScript", "ReactJs", "ExpressJs"];
+// const skills = ["HTML", "CSS", "JavaScript", "ReactJs", "ExpressJs"];
 const isResume = true;
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useSelector((state) => state.auth);
+  const skills = user?.profile?.skills;
   return (
     <div>
       <Navbar />
@@ -26,11 +29,8 @@ const Profile = () => {
               />
             </Avatar>
             <div>
-              <h1 className="font-medium text-xl">Full Name</h1>
-              <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque,
-                perspiciatis?
-              </p>
+              <h1 className="font-medium text-xl">{user?.fullname}</h1>
+              <p>{user?.profile?.bio}</p>
             </div>
           </div>
           <Button
@@ -44,11 +44,11 @@ const Profile = () => {
         <div className="my-5">
           <div className="flex items-center gap-3 my-2">
             <Mail />
-            <span>ujjwal@gmail.com</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex items-center gap-3 my-2">
             <Contact />
-            <span>9889152121</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
         <div className="my-5">
@@ -57,7 +57,7 @@ const Profile = () => {
             {skills.length !== 0 ? (
               skills.map((item, index) => (
                 <Badge className="rounded-full" key={index}>
-                  {item}
+                  {item.toUpperCase()}
                 </Badge>
               ))
             ) : (

@@ -1,6 +1,8 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import { generateTokenAndSetCookie } from "../utils/genToken.js";
+import getDataUri from "../utils/dataUri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
   try {
@@ -141,9 +143,9 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   try {
-    console.log(req.body);
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email && !emailRegex.test(email)) {
       return res
@@ -173,6 +175,16 @@ export const updateProfile = async (req, res) => {
     user.profile.bio = bio || user.profile.bio;
     user.profile.skills =
       skillsArray && skillsArray.length > 0 ? skillsArray : user.profile.skills;
+
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+      if (cloudResponse) {
+        user.profile.resume = cloudResponse.secure_url;
+        user.profile.resumeOriginalName = file.originalname;
+      }
+    }
 
     await user.save();
     return res.status(200).json({

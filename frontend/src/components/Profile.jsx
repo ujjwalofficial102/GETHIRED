@@ -10,7 +10,6 @@ import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
 
 // const skills = ["HTML", "CSS", "JavaScript", "ReactJs", "ExpressJs"];
-const isResume = true;
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
@@ -54,8 +53,8 @@ const Profile = () => {
         <div className="my-5">
           <h1>Skills</h1>
           <div className="flex items-center gap-2">
-            {skills.length !== 0 ? (
-              skills.map((item, index) => (
+            {skills?.length !== 0 ? (
+              skills?.map((item, index) => (
                 <Badge className="rounded-full" key={index}>
                   {item.toUpperCase()}
                 </Badge>
@@ -67,14 +66,14 @@ const Profile = () => {
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label className="text-md font-bold">Resume</Label>
-          {isResume ? (
+          {user?.profile?.resume ? (
             <span>
               <a
                 target="_blank"
-                href="https://youtube.com"
+                href={user?.profile?.resume}
                 className="text-blue-500 w-full hover:underline"
               >
-                resume
+                {user?.profile?.resumeOriginalName}
               </a>
             </span>
           ) : (

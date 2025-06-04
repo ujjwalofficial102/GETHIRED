@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -27,8 +27,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     phoneNumber: user?.phoneNumber,
     bio: user?.profile?.bio,
     skills: user?.profile?.skills.map((skill) => skill),
-    file: user?.profile?.resume,
+    file: null,
   });
+
+  const fileInputRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -36,7 +38,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const fileChangeHandler = () => {
+  const fileChangeHandler = (e) => {
     const file = e.target.files?.[0];
     setInput({ ...input, file });
   };
@@ -49,7 +51,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
-    if (input.file) {
+    if (input.file instanceof File) {
       formData.append("file", input.file);
     }
     try {
@@ -72,6 +74,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       console.log(error);
     } finally {
       setLoading(false);
+      setInput((prev) => ({ ...prev, file: null }));
+      if (fileInputRef.current) fileInputRef.current.value = null;
     }
     setOpen(false);
   };
@@ -162,6 +166,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                   type="file"
                   id="file"
                   name="file"
+                  ref={fileInputRef}
                   onChange={fileChangeHandler}
                   accept="application/pdf"
                   className="col-span-3 cursor-pointer"

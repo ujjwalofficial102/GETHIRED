@@ -13,6 +13,8 @@ export const register = async (req, res) => {
         message: "Please fill in all required fields.",
       });
     }
+    const file = req.file;
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res
@@ -42,6 +44,16 @@ export const register = async (req, res) => {
       password: hashedPass,
       role,
     });
+
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+      if (cloudResponse) {
+        newUser.profile.profilePhoto = cloudResponse.secure_url;
+        await newUser.save();
+      }
+    }
 
     generateTokenAndSetCookie(newUser._id, res);
     return res.status(200).json({

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Navbar from "../shared/Navbar";
@@ -18,8 +18,10 @@ const Signup = () => {
     phoneNumber: "",
     password: "",
     role: "student",
-    file: "",
+    file: null,
   });
+
+  const fileInputRef = useRef(null);
 
   const navigate = useNavigate();
   const { loading } = useSelector((state) => state.auth);
@@ -69,6 +71,8 @@ const Signup = () => {
       console.log(error);
     } finally {
       dispatch(setLoading(false));
+      setInput((prev) => ({ ...prev, file: null }));
+      if (fileInputRef.current) fileInputRef.current.value = null;
     }
   };
   return (
@@ -162,6 +166,7 @@ const Signup = () => {
                 type="file"
                 onChange={changeFileHandler}
                 name="file"
+                ref={fileInputRef}
                 className="cursor-pointer"
               />
             </div>

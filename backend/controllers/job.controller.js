@@ -122,10 +122,9 @@ export const getJobById = async (req, res) => {
         message: "Invalid JobId",
       });
     }
-    const job = await Job.findById(jobId)
-      .populate("company")
-      .sort({ createdAt: -1 });
-
+    const job = await Job.findById(jobId).populate({
+      path: "applications",
+    });
     if (!job) {
       return res.status(404).json({
         success: false,

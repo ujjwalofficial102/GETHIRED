@@ -60,7 +60,7 @@ export const register = async (req, res) => {
       success: true,
       message: "Account Created Successfully.",
       user: {
-        id: newUser._id,
+        _id: newUser._id,
         fullname: newUser.fullname,
         email: newUser.email,
         phoneNumber: newUser.phoneNumber,
@@ -118,7 +118,7 @@ export const login = async (req, res) => {
 
       message: "Login Successful",
       user: {
-        id: user._id,
+        _id: user._id,
         fullname: user.fullname,
         email: user.email,
         phoneNumber: user.phoneNumber,
@@ -203,7 +203,7 @@ export const updateProfile = async (req, res) => {
       success: true,
       message: "User updated successfully",
       user: {
-        id: user._id,
+        _id: user._id,
         fullname: user.fullname,
         email: user.email,
         phoneNumber: user.phoneNumber,

@@ -51,21 +51,37 @@ const Navbar = () => {
         </div>
         <div className="flex gap-10">
           <ul className="flex font-medium items-center gap-5">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/jobs">Jobs</Link>
-            </li>
-            <li>
-              <Link to="/browse">Browse</Link>
-            </li>
+            {user && user.role === "recruiter" ? (
+              <>
+                {" "}
+                <li>
+                  <Link to="/admin/companies">Companies</Link>
+                </li>
+                <li>
+                  <Link to="/admin/jobs">Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                {" "}
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/jobs">Jobs</Link>
+                </li>
+                <li>
+                  <Link to="/browse">Browse</Link>
+                </li>
+              </>
+            )}
           </ul>
           {user ? (
             <Popover>
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
                   <AvatarImage
+                    className="object-cover object-center"
                     src={
                       user?.profile?.profilePhoto ||
                       "https://github.com/shadcn.png"
@@ -78,6 +94,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-5">
                   <Avatar className="cursor-pointer">
                     <AvatarImage
+                      className="object-cover object-center"
                       src={
                         user?.profile?.profilePhoto ||
                         "https://github.com/shadcn.png"
@@ -93,15 +110,17 @@ const Navbar = () => {
                   </div>
                 </div>
                 <div className="flex flex-col text-gray-600 mt-2">
-                  <div className="flex w-fit items-center gap-2 cursor-pointer">
-                    <User2 />
-                    <Button
-                      variant="link"
-                      className="focus-visible:outline-none focus-visible:ring-0 cursor-pointer"
-                    >
-                      <Link to="/profile">View Profile</Link>
-                    </Button>
-                  </div>
+                  {user && user.role === "student" && (
+                    <div className="flex w-fit items-center gap-2 cursor-pointer">
+                      <User2 />
+                      <Button
+                        variant="link"
+                        className="focus-visible:outline-none focus-visible:ring-0 cursor-pointer"
+                      >
+                        <Link to="/profile">View Profile</Link>
+                      </Button>
+                    </div>
+                  )}
                   <div className="flex w-fit items-center gap-2 cursor-pointer">
                     <LogOut />
                     <Button

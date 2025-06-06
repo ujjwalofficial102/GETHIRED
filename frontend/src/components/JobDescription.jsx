@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import Navbar from "./shared/Navbar";
@@ -16,10 +16,12 @@ const JobDescription = () => {
 
   const { singleJob } = useSelector((store) => store.job);
   const { user } = useSelector((store) => store.auth);
-  const isApplied =
+  const isInitiallyApplied =
     singleJob?.applications?.some(
       (application) => application.applicant?.toString() === user?._id
     ) || false;
+
+  const [isApplied, setIsApplied] = useState(isInitiallyApplied);
 
   const applyJobHandler = async () => {
     try {
@@ -30,10 +32,17 @@ const JobDescription = () => {
         }
       );
       if (res.data.success === true) {
+        setIsApplied(true);
+        const updatedSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user._id }],
+        };
+        dispatch(setSingleJob(updatedSingleJob));
         toast.success(res.data.message);
         console.log(res.data);
       } else {
-        toast.error(res.data.message);
+        // toast.error(res.data.message);
+        console.log(res.data.message);
       }
     } catch (error) {
       toast.error(error?.response?.data?.message);
@@ -48,13 +57,17 @@ const JobDescription = () => {
           withCredentials: true,
         });
         if (res.data.success === true) {
-          console.log(res.data);
           dispatch(setSingleJob(res.data.job));
+          setIsApplied(
+            res.data.job.applications.some(
+              (application) => application.applicant === user?._id
+            )
+          );
         } else {
           toast.error(res.data.message);
         }
       } catch (error) {
-        toast.error(error?.response?.data?.message);
+        // toast.error(error?.response?.data?.message);
         console.log(error);
       }
     };

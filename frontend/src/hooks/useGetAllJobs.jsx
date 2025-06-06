@@ -3,6 +3,7 @@ import { JOB_API_END_POINT } from "@/utils/constant";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const useGetAllJobs = () => {
   const dispatch = useDispatch();
@@ -16,10 +17,11 @@ const useGetAllJobs = () => {
           console.log(res.data);
           dispatch(setAllJobs(res.data.jobs));
         } else {
-          toast.error(res.data.message);
+          // toast.error(res.data.message);
+          console.log(res.data.message);
         }
       } catch (error) {
-        toast.error(error?.response?.data?.message);
+        // toast.error(error?.response?.data?.message);
         console.log(error);
       }
     };

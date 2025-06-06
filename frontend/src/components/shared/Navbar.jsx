@@ -21,9 +21,13 @@ const Navbar = () => {
 
   const logoutHandler = async () => {
     try {
-      const res = await axios.post(`${USER_API_END_POINT}/logout`, {
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        `${USER_API_END_POINT}/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
       if (res.data.success === true) {
         dispatch(setUser(null));
         toast.success(res.data.message);

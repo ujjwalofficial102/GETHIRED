@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { toast } from "sonner";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { COMPANY_API_END_POINT } from "@/utils/constant";
+import { useSelector } from "react-redux";
 
 const CompanySetup = () => {
   const [input, setInput] = useState({
@@ -14,6 +19,9 @@ const CompanySetup = () => {
     file: null,
   });
 
+  const { singleCompany } = useSelector((store) => store.company);
+  const params = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const changeEventHandler = (e) => {
@@ -27,8 +35,51 @@ const CompanySetup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
+    const formData = new FormData();
+    formData.append("name", input.name);
+    formData.append("description", input.description);
+    formData.append("website", input.website);
+    formData.append("location", input.location);
+    if (input.file) {
+      formData.append("file", input.file);
+    }
+    try {
+      setLoading(true);
+      const res = await axios.post(
+        `${COMPANY_API_END_POINT}/update/${params.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res.data.success === true) {
+        toast.success(res.data.message);
+        console.log(res.data);
+        navigate("/admin/companies");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    setInput({
+      name: singleCompany?.name || "",
+      description: singleCompany?.description || "",
+      website: singleCompany?.website || "",
+      location: singleCompany?.location || "",
+      file: null,
+    });
+  }, [singleCompany]);
+
   return (
     <div>
       <Navbar />
@@ -38,6 +89,7 @@ const CompanySetup = () => {
             <Button
               type="button"
               variant={"outline"}
+              onClick={() => navigate("/admin/companies")}
               className="flex items-center gap-2 text-gray-500 font-semibold"
             >
               <ArrowLeft />
@@ -92,9 +144,16 @@ const CompanySetup = () => {
               />
             </div>
           </div>
-          <Button type="submit" className={"w-full mt-8"}>
-            Update
-          </Button>
+
+          {loading ? (
+            <Button type="button" className="w-full mt-8 cursor-not-allowed">
+              <Loader2 className=" h-4 w-4 animate-spin" />
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full mt-8 cursor-pointer">
+              Update
+            </Button>
+          )}
         </form>
       </div>
     </div>

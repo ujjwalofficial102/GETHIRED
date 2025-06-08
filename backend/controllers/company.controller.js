@@ -1,4 +1,6 @@
 import Company from "../models/company.model.js";
+import cloudinary from "../utils/cloudinary.js";
+import getDataUri from "../utils/dataUri.js";
 
 export const registerCompany = async (req, res) => {
   try {
@@ -113,6 +115,15 @@ export const updateCompany = async (req, res) => {
           success: false,
           message: "A company with this name already exists",
         });
+      }
+    }
+
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+      if (cloudResponse) {
+        company.logo = cloudResponse.secure_url;
       }
     }
 

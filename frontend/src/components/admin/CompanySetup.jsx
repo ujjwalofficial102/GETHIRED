@@ -9,6 +9,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { useSelector } from "react-redux";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const CompanySetup = () => {
   const [input, setInput] = useState({
@@ -18,9 +19,10 @@ const CompanySetup = () => {
     location: "",
     file: null,
   });
+  const params = useParams();
+  useGetCompanyById({ id: params.id });
 
   const { singleCompany } = useSelector((store) => store.company);
-  const params = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 

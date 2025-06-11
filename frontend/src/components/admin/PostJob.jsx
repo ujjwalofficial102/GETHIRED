@@ -14,6 +14,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { toast } from "sonner";
+import { JOB_API_END_POINT } from "@/utils/constant";
+import axios from "axios";
+import { Loader2 } from "lucide-react";
 
 const PostJob = () => {
   const [input, setInput] = useState({
@@ -28,6 +32,7 @@ const PostJob = () => {
     companyId: "",
   });
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const { companies } = useSelector((store) => store.company);
 
@@ -35,9 +40,27 @@ const PostJob = () => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
+    try {
+      setLoading(true);
+      const res = await axios.post(`${JOB_API_END_POINT}/post`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (res.data.success === true) {
+        toast.success(res.data.message);
+        console.log(res.data);
+        navigate("/admin/jobs");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const selectChangeHandler = (value) => {
@@ -100,6 +123,7 @@ const PostJob = () => {
                 type={"number"}
                 min="0"
                 name="salary"
+                step="any"
                 placeholder="e.g. 8 (in LPA)"
                 value={input.salary}
                 onChange={changeEventHandler}
@@ -140,6 +164,7 @@ const PostJob = () => {
                 type={"number"}
                 min="0"
                 name="experience"
+                step="any"
                 placeholder="e.g. 2 (in years)"
                 value={input.experience}
                 onChange={changeEventHandler}
@@ -198,13 +223,19 @@ const PostJob = () => {
               *Please register a company first, before posting a job
             </p>
           )}
+          {loading === false ? (
+            <Button
+              type={companies?.length === 0 ? "button" : "submit"}
+              className={"w-full mt-2 cursor-pointer"}
+            >
+              Post New Job
+            </Button>
+          ) : (
+            <Button type="button" className={"w-full mt-2 cursor-not-allowed"}>
+              <Loader2 className=" h-4 w-4 animate-spin" />
+            </Button>
+          )}
 
-          <Button
-            type={companies?.length === 0 ? "button" : "submit"}
-            className={"w-full mt-2 cursor-pointer"}
-          >
-            Post New Job
-          </Button>
           <Button
             variant={"outline"}
             type="button"

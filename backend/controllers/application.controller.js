@@ -99,7 +99,7 @@ export const getApplicants = async (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      job,
+      applications: job.applications,
     });
   } catch (error) {
     return res.status(200).json({

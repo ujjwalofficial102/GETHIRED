@@ -21,8 +21,7 @@ const Job = ({ job }) => {
         <p className="text-sm text-gray-500">
           {daysAgoFunction(job?.createdAt) === 0
             ? "Today"
-            : `${daysAgoFunction(job?.createdAt)}`}{" "}
-          days ago
+            : `${daysAgoFunction(job?.createdAt)} days ago`}
         </p>
         <Button variant="outline" className={"rounded-full"} size={"icon"}>
           <Bookmark />
@@ -31,7 +30,13 @@ const Job = ({ job }) => {
       <div className="flex items-center gap-2 my-2">
         <Button className="p-6" variant={"outline"} size={"icon"}>
           <Avatar>
-            <AvatarImage src="https://img.freepik.com/premium-vector/beautiful-unique-logo-design-ecommerce-retail-company_1287271-14561.jpg?semt=ais_hybrid&w=740" />
+            <AvatarImage
+              src={
+                job?.company?.logo
+                  ? job.company.logo
+                  : "https://img.freepik.com/premium-vector/beautiful-unique-logo-design-ecommerce-retail-company_1287271-14561.jpg?semt=ais_hybrid&w=740"
+              }
+            />
           </Avatar>
         </Button>
         <div>

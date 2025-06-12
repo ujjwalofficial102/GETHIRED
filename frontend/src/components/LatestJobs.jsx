@@ -1,10 +1,10 @@
 import React from "react";
 import LatestjobCards from "./LatestjobCards";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LatestJobs = () => {
   const { allJobs } = useSelector((state) => state.job);
-  console.log(allJobs);
 
   return (
     <div className="max-w-6xl mx-auto my-10">

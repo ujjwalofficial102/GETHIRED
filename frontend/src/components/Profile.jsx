@@ -8,6 +8,7 @@ import { Label } from "./ui/label";
 import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
 
 // const skills = ["HTML", "CSS", "JavaScript", "ReactJs", "ExpressJs"];
 
@@ -15,6 +16,7 @@ const Profile = () => {
   const [open, setOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const skills = user?.profile?.skills;
+  useGetAppliedJobs();
   return (
     <div>
       <Navbar />

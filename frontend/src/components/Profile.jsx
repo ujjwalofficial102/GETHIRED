@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import Navbar from "./shared/Navbar";
+import Navbar from "./shared/Navbar.jsx";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Contact, Mail, Pen } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
-import AppliedJobTable from "./AppliedJobTable";
-import UpdateProfileDialog from "./UpdateProfileDialog";
+import AppliedJobTable from "./AppliedJobTable.jsx";
+import UpdateProfileDialog from "./UpdateProfileDialog.jsx";
 import { useSelector } from "react-redux";
-import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
+import useGetAppliedJobs from "@/hooks/useGetAppliedJobs.jsx";
 
 // const skills = ["HTML", "CSS", "JavaScript", "ReactJs", "ExpressJs"];
 

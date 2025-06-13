@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import LatestjobCards from "./LatestjobCards";
+import LatestjobCards from "./LatestjobCards.jsx";
 import { useSelector } from "react-redux";
 
 const LatestJobs = () => {

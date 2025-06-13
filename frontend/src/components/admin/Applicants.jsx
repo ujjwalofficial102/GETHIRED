@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Navbar from "../shared/Navbar";
-import ApplicantsTable from "./ApplicantsTable";
+import Navbar from "../shared/Navbar.jsx";
+import ApplicantsTable from "./ApplicantsTable.jsx";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";

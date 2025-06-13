@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import Navbar from "../shared/Navbar";
+import Navbar from "../shared/Navbar.jsx";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";

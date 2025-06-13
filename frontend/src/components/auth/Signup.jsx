@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Navbar from "../shared/Navbar";
@@ -24,7 +24,7 @@ const Signup = () => {
   const fileInputRef = useRef(null);
 
   const navigate = useNavigate();
-  const { loading } = useSelector((state) => state.auth);
+  const { loading, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const changeEventHandler = (e) => {
@@ -75,6 +75,13 @@ const Signup = () => {
       if (fileInputRef.current) fileInputRef.current.value = null;
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <div>
       <Navbar />

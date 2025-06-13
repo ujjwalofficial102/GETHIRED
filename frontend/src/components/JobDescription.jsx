@@ -8,6 +8,7 @@ import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from "@/utils/constant";
 import { setSingleJob } from "@/redux/jobSlice";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const JobDescription = () => {
   const params = useParams();
@@ -76,7 +77,13 @@ const JobDescription = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-6xl mx-auto my-10">
+      <motion.div
+        initial={{ opacity: 0, x: 100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -100 }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+        className="max-w-6xl mx-auto my-10"
+      >
         <div className="flex items-center justify-between">
           <div>
             <h1 className="font-bold text-xl">{singleJob?.title}</h1>
@@ -149,7 +156,7 @@ const JobDescription = () => {
             </span>
           </h1>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

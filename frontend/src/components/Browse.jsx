@@ -4,6 +4,7 @@ import Job from "./job";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchedQuery } from "@/redux/jobSlice";
 import useGetAllJobs from "@/hooks/useGetAllJobs";
+import { motion } from "framer-motion";
 
 const randomJobs = [1, 2, 3];
 
@@ -25,9 +26,15 @@ const Browse = () => {
         </h1>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {allJobs.map((job, index) => (
-            <div key={job._id}>
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -100 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              key={job?._id}
+            >
               <Job job={job} />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

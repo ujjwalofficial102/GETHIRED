@@ -1,7 +1,6 @@
-import React from "react";
+import { motion } from "framer-motion";
 import LatestjobCards from "./LatestjobCards";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const LatestJobs = () => {
   const { allJobs } = useSelector((state) => state.job);
@@ -15,9 +14,17 @@ const LatestJobs = () => {
         {allJobs?.length === 0 ? (
           <span>No Job Available</span>
         ) : (
-          allJobs
-            ?.slice(0, 6)
-            .map((job) => <LatestjobCards key={job?._id} job={job} />)
+          allJobs?.slice(0, 6).map((job) => (
+            <motion.div
+              initial={{ opacity: 0, y: 200 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -200 }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+              key={job?._id}
+            >
+              <LatestjobCards key={job?._id} job={job} />
+            </motion.div>
+          ))
         )}
       </div>
     </div>

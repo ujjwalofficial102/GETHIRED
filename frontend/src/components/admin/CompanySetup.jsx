@@ -59,7 +59,6 @@ const CompanySetup = () => {
       );
       if (res.data.success === true) {
         toast.success(res.data.message);
-        console.log(res.data);
         navigate("/admin/companies");
       } else {
         toast.error(res.data.message);

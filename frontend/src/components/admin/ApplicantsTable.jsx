@@ -30,10 +30,8 @@ const ApplicantsTable = () => {
       );
       if (res.data.success === true) {
         toast.success(res.data.message);
-        console.log(res.data);
       } else {
         toast.error(res.data.message);
-        console.log(res.data);
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");

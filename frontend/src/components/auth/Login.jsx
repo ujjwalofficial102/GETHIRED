@@ -43,7 +43,6 @@ const Login = () => {
 
       if (res.data.success === true) {
         toast.success(res.data.message);
-        console.log(res.data);
         dispatch(setUser(res.data.user));
         navigate("/");
       } else {

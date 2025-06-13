@@ -17,7 +17,6 @@ const useGetCompanyById = ({ id }) => {
         );
         if (res.data.success === true) {
           dispatch(setSingleCompany(res.data.company));
-          console.log(res.data);
         } else {
           console.log(res.data.message);
         }

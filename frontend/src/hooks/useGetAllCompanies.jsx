@@ -14,7 +14,6 @@ const useGetAllCompanies = () => {
         });
         if (res.data.success === true) {
           dispatch(setCompanies(res.data.companies));
-          console.log(res.data);
         } else {
           console.log(res.data.message);
         }

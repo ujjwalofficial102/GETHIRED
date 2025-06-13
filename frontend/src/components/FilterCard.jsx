@@ -31,7 +31,6 @@ const FilterCard = () => {
   }, [selectedValue]);
 
   const clearHandler = () => {
-    console.log("clicked");
     setSelectedValue("");
     dispatch(setFilteredValue(selectedValue));
   };

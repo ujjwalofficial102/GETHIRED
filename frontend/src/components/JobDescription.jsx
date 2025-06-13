@@ -40,7 +40,6 @@ const JobDescription = () => {
         };
         dispatch(setSingleJob(updatedSingleJob));
         toast.success(res.data.message);
-        console.log(res.data);
       } else {
         // toast.error(res.data.message);
         console.log(res.data.message);

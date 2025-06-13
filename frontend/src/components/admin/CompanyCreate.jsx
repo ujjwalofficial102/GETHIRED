@@ -33,7 +33,6 @@ const CompanyCreate = () => {
       if (res.data.success === true) {
         dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
-        console.log(res.data);
         const companyId = res?.data?.company?._id;
         navigate(`/admin/companies/${companyId}`);
       } else {

@@ -18,7 +18,6 @@ const useGetAllJobs = () => {
           }
         );
         if (res.data.success === true) {
-          console.log(res.data);
           dispatch(setAllJobs(res.data.jobs));
         } else {
           console.log(res.data.message);
